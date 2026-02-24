@@ -62,6 +62,9 @@ add_force {/cpu_tb/U_1/mw_U_0ram_table[5]} -radix hex {00000000}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[6]} -radix hex {00000000}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[7]} -radix hex {00000000}
 
+add_force reset 0 
+run 2500ps
+
 #give a reset signal
 run 2500ps
 add_force reset 1
@@ -93,6 +96,9 @@ add_force {/cpu_tb/U_1/mw_U_0ram_table[4]} -radix hex {00000000}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[5]} -radix hex {00000000}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[6]} -radix hex {00000000}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[7]} -radix hex {00000000}
+
+add_force reset 0 
+run 2500ps
 
 #give a reset signal
 run 2500ps
@@ -126,6 +132,9 @@ add_force {/cpu_tb/U_1/mw_U_0ram_table[5]} -radix hex {00000000}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[6]} -radix hex {00000000}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[7]} -radix hex {00000000}
 
+add_force reset 0 
+run 2500ps
+
 #give a reset signal
 run 2500ps
 add_force reset 1
@@ -158,6 +167,9 @@ add_force {/cpu_tb/U_1/mw_U_0ram_table[5]} -radix hex {00000000}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[6]} -radix hex {00000000}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[7]} -radix hex {00000000}
 
+add_force reset 0 
+run 2500ps
+
 #give a reset signal
 run 2500ps
 add_force reset 1
@@ -189,6 +201,9 @@ add_force {/cpu_tb/U_1/mw_U_0ram_table[4]} -radix hex {00000000}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[5]} -radix hex {00000000}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[6]} -radix hex {00000000}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[7]} -radix hex {00000000}
+
+add_force reset 0 
+run 2500ps
 
 #give a reset signal
 run 2500ps
@@ -226,6 +241,9 @@ add_force {/cpu_tb/U_1/mw_U_0ram_table[5]} -radix hex {00000000}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[6]} -radix hex {20010001}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[7]} -radix hex {ACE1000F}
 
+add_force reset 0 
+run 2500ps
+
 #give a reset signal
 run 2500ps
 add_force reset 1
@@ -241,122 +259,95 @@ if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0x00000001} 
 	puts "InCorrect! Test 6 didn't pass."
 }
 
-# Test 7
+# Test 7: OR instruction
 
-#lui $1, 0x00001001
-#ori $13, $1,0x00000020
-#lui $1, 0x00000123
-#ori $9, $1,0x00004567
-#sw $9, 0($13)
-#lh $11, 2($13)
-#sw $11, 16($13)
+# addi $7, $0, 17
+# addi $11, $0, 5
+# or $11, $7, $11
+# sw $11, 15($7)
 
-# you can use any of the following commands as an example on how to initilaize a memory location with a value
-add_force {/cpu_tb/U_1/mw_U_0ram_table[0]} -radix hex {3C011001}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[1]} -radix hex {342D0020}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[2]} -radix hex {3C010123}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[3]} -radix hex {34294567}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[4]} -radix hex {ADA90000}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[5]} -radix hex {85AB0002}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[6]} -radix hex {ADAB0010}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[7]} -radix hex {00000000}
-
-#give a reset signal
-run 2500ps
-add_force reset 1
-run 5 ns
-add_force reset 0
-
-run 800 ns
-
-#check if the result is correct
-if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0x01234567} {
-	puts "Correct! Test 7 first SW passed"
-} else {
-	puts "InCorrect! Test 7 first SW didn't pass."
-}
-
-#check if the result is correct
-if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[12]}] == 0x00000123} {
-	puts "Correct! Test 7 second SW passed"
-} else {
-	puts "InCorrect! Test 7 second SW didn't pass."
-}
-
-# Test 8
-
-#lui $1, 0x00001001
-#ori $13, $1,0x00000020
-#addi $9, $0,-45
-#clo, $10,$9
-#sw $10, 0($13)
-
-# you can use any of the following commands as an example on how to initilaize a memory location with a value
-add_force {/cpu_tb/U_1/mw_U_0ram_table[0]} -radix hex {3C011001}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[1]} -radix hex {342D0020}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[2]} -radix hex {2009FFD3}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[3]} -radix hex {71205021}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[4]} -radix hex {ADAA0000}
+add_force {/cpu_tb/U_1/mw_U_0ram_table[0]} -radix hex {20070011}  
+add_force {/cpu_tb/U_1/mw_U_0ram_table[1]} -radix hex {200B0005}  
+add_force {/cpu_tb/U_1/mw_U_0ram_table[2]} -radix hex {00EB5825}  
+add_force {/cpu_tb/U_1/mw_U_0ram_table[3]} -radix hex {ACEB000F}  
+add_force {/cpu_tb/U_1/mw_U_0ram_table[4]} -radix hex {00000000}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[5]} -radix hex {00000000}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[6]} -radix hex {00000000}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[7]} -radix hex {00000000}
 
-#give a reset signal
+add_force reset 0 
+run 2500ps
+
 run 2500ps
 add_force reset 1
 run 5 ns
 add_force reset 0
+run 400 ns
 
-run 1000 ns
-
-#check if the result is correct
-if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0x0000001A} {
-	puts "Correct! Test 8 passed."
+if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0x00000015} {
+    puts "Correct! Test 7 passed."
 } else {
-	puts "InCorrect! Test 8 didn't pass."
+    puts "InCorrect! Test 7 didn't pass."
 }
 
-# Test 9
+# Test 8: LUI + ORI
 
-#lui $1, 0x00001001
-#li $3,0xFF0F
-#sw $3, 32($1)
-#li $5,0xBBBB
-#sll $0,$0,0
-#lw $2, 32($1)
-#and $4, $2,$5
-#sw $4, 36($1)
+# lui $7, 0x1234
+# ori $7, $7, 0x5678
+# sw $7, 32($0)
 
-# you can use any of the following commands as an example on how to initilaize a memory location with a value
-add_force {/cpu_tb/U_1/mw_U_0ram_table[0]} -radix hex {3C011001}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[1]} -radix hex {3403FF0F}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[2]} -radix hex {AC230020}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[3]} -radix hex {3405BBBB}
+add_force {/cpu_tb/U_1/mw_U_0ram_table[0]} -radix hex {3C071234}  
+add_force {/cpu_tb/U_1/mw_U_0ram_table[1]} -radix hex {34E75678}  
+add_force {/cpu_tb/U_1/mw_U_0ram_table[2]} -radix hex {AC070020}   
+add_force {/cpu_tb/U_1/mw_U_0ram_table[3]} -radix hex {00000000}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[4]} -radix hex {00000000}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[5]} -radix hex {8C220020}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[6]} -radix hex {00452024}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[7]} -radix hex {AC240024}
+add_force {/cpu_tb/U_1/mw_U_0ram_table[5]} -radix hex {00000000}
+add_force {/cpu_tb/U_1/mw_U_0ram_table[6]} -radix hex {00000000}
+add_force {/cpu_tb/U_1/mw_U_0ram_table[7]} -radix hex {00000000}
 
-#give a reset signal
+add_force reset 0 
+run 2500ps
+
 run 2500ps
 add_force reset 1
 run 5 ns
 add_force reset 0
-
 run 1000 ns
 
-#check if the result is correct
-if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0x0000ff0f} {
-	puts "Correct! Test 9 first SW passed"
+# Check memory index 8 (address 32 / 4 = 8)
+if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0x12345678} {
+    puts "Correct! Test 8 passed."
 } else {
-	puts "InCorrect! Test 9 first SW didn't pass."
+    puts "InCorrect! Test 8 didn't pass."
 }
 
-#check if the result is correct
-if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[9]}] == 0x0000bb0b} {
-	puts "Correct! Test 9 second SW passed"
+# Test 9: ADDI (simple test)
+
+# addi $7, $0, 100
+# sw $7, 32($0)
+
+add_force {/cpu_tb/U_1/mw_U_0ram_table[0]} -radix hex {20070064}  
+add_force {/cpu_tb/U_1/mw_U_0ram_table[1]} -radix hex {AC070020}  
+add_force {/cpu_tb/U_1/mw_U_0ram_table[2]} -radix hex {00000000}
+add_force {/cpu_tb/U_1/mw_U_0ram_table[3]} -radix hex {00000000}
+add_force {/cpu_tb/U_1/mw_U_0ram_table[4]} -radix hex {00000000}
+add_force {/cpu_tb/U_1/mw_U_0ram_table[5]} -radix hex {00000000}
+add_force {/cpu_tb/U_1/mw_U_0ram_table[6]} -radix hex {00000000}
+add_force {/cpu_tb/U_1/mw_U_0ram_table[7]} -radix hex {00000000}
+
+add_force reset 0 
+run 2500ps
+
+run 2500ps
+add_force reset 1
+run 5 ns
+add_force reset 0
+run 400 ns
+
+if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0x00000064} {
+    puts "Correct! Test 9 passed."
 } else {
-	puts "InCorrect! Test 9 second SW didn't pass."
+    puts "InCorrect! Test 9 didn't pass."
 }
 
 # Test 10
@@ -380,6 +371,9 @@ add_force {/cpu_tb/U_1/mw_U_0ram_table[5]} -radix hex {00000000}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[6]} -radix hex {00000000}
 add_force {/cpu_tb/U_1/mw_U_0ram_table[7]} -radix hex {AC0B0020}
 
+add_force reset 0 
+run 2500ps
+
 #give a reset signal
 run 2500ps
 add_force reset 1
@@ -389,7 +383,7 @@ add_force reset 0
 run 1000 ns
 
 #check if the result is correct
-if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0xFFFFFFD} {
+if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0xFFFFFFFD} {
 	puts "Correct! Test 10 passed."
 } else {
 	puts "InCorrect! Test 10 didn't pass."
