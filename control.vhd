@@ -76,13 +76,7 @@ begin
 					state <= s2;
 				when s2=> --Exec
 					if Op = "000000" then --R-type
-					   if IR4 = "011001" then
-					       if done = '1' then
-					           state <= s0;
-					       end if;
-					    else
-						   state <= s3;
-						end if;
+						state <= s3;
 					elsif Op = "100011" then --LW
 						state <= s3;
 					elsif Op = "101011" then --SW
@@ -175,7 +169,7 @@ begin
                     RegDest <= '0';
                     PCSource <= "00";
                     ALUSrcB <= "00";
-					elsif Op <= "100011" then --LW
+					elsif Op = "100011" then --LW
 					   ALUOp <= "0000";
 					   PCWriteCond <= '0';
                        PCWrite <= '0';
@@ -192,7 +186,7 @@ begin
                        RegWrite <= '0';
                        RegDest <= '0';
                        PCSource <= "00";
-                       ALUSrcB <= "00";
+                       ALUSrcB <= "00";      
 					elsif Op = "101011" then --SW
 				       ALUOp <= "0000";
 					   PCWriteCond <= '0';
@@ -247,24 +241,6 @@ begin
                        RegDest <= '0';
                        PCSource <= "00";
                        ALUSrcB <= "00";	
-                     elsif Op = "000001" then --BLTZAL
-                       ALUOp <= "0000";
-                       PCWriteCond <= '0';
-                       PCWrite <= '0';
-                       MemRead <= '0';
-                       IorD <= '0';
-                       A_en <= '1';
-				       B_en <= '1';
-				       ALUOut_en <= '1';
-				       MemData_en <= '0';
-                       MemWrite <= '0';
-                       MemToReg <= '0';
-                       IRWrite <= '0';
-                       ALUSrcA <= '0';
-                       RegWrite <= '0';
-                       RegDest <= '0';
-                       PCSource <= "00";
-                       ALUSrcB <= "00";
                      else 
                         ALUOp <= "0000";
                         PCWriteCond <= '0';
@@ -290,23 +266,16 @@ begin
 			             ALUOp <= "0101"; --addu
 			        elsif IR4 = "100100" then
 			             ALUOp <= "0000"; --and
+			        elsif IR4 = "100101" then
+			             ALUOp <= "0001"; --or
 			        elsif IR4 = "000011" then
 			             ALUOp <= "1110"; --sra 
 			             shamt_sel <= "00";
 			        elsif IR4 = "100010" then
 			             ALUOp <= "0110"; --sub
-			        elsif IR4 = "001000" then -- jr
-			             ALUOp <= "0101"; --???
 			        elsif IR4 = "000000" then
 			             ALUOp <= "1100"; --sll 
 			             shamt_sel <= "00";
-			        elsif IR4 = "000100" then
-			             ALUOp <= "1100"; --sllv
-			             shamt_sel <= "01";
-			        elsif IR4 = "010000" then --mfhi
-			             ALUOp <= "1100";
-			        elsif IR4 = "010010" then --mflo
-			             ALUOp <= "0000";
 			        end if;
 				    PCWriteCond <= '0';
                     PCWrite <= '0';
@@ -396,24 +365,6 @@ begin
                        RegDest <= '0';
                        PCSource <= "01";
                        ALUSrcB <= "00";	
-                     elsif Op = "000001" then --BLTZAL Countdown
-                       ALUOp <= "0101"; --add???
-                       PCWriteCond <= '0';
-                       PCWrite <= '0';
-                       MemRead <= '0';
-                       IorD <= '0';
-                       A_en <= '0';
-				       B_en <= '0';
-				       ALUOut_en <= '1';
-				       MemData_en <= '0';
-                       MemWrite <= '0';
-                       MemToReg <= '0';
-                       IRWrite <= '0';
-                       ALUSrcA <= '1';
-                       RegWrite <= '0';
-                       RegDest <= '0';
-                       PCSource <= "01";
-                       ALUSrcB <= "10"; 
                       else 
                         if Op = "001000" then
                             ALUOp <= "0101"; --addi
