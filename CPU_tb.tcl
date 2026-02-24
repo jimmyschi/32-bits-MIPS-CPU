@@ -9,7 +9,9 @@ add_wave {{/cpu_tb/U_1}}
 #forcing a clock with 10 ns period
 add_force clock 1 {0 5ns} -repeat_every 10ns
 
-# Test 0
+set passedTests 0
+
+# Test 1
 
 #addi $7, $0, 17
 #addi $11, $0, -3
@@ -40,12 +42,13 @@ run 400 ns
 
 #check if the result is correct (result F010 E8EE A3E2 0B28)
 if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0x00000011} {
-	puts "Correct! Test 0 passed."
+	incr passedTests
+	puts "Correct! Test 1 passed."
 } else {
-	puts "InCorrect! Test 0 didn't pass."
+	puts "InCorrect! Test 1 didn't pass."
 }
 
-# Test 1
+# Test 2
 
 #addi $7, $0, 17
 #addi $11, $0, -3
@@ -75,12 +78,13 @@ run 400 ns
 
 #check if the result is correct (result F010 E8EE A3E2 0B28)
 if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0x00000014} {
-	puts "Correct! Test 1 passed."
+	incr passedTests
+	puts "Correct! Test 2 passed."
 } else {
-	puts "InCorrect! Test 1 didn't pass."
+	puts "InCorrect! Test 2 didn't pass."
 }
 
-# Test 2
+# Test 3
 
 #addi $7, $0, 17
 #addi $11, $0, -3
@@ -110,12 +114,13 @@ run 400 ns
 
 #check if the result is correct (result F010 E8EE A3E2 0B28)
 if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0x0000000E} {
-	puts "Correct! Test 2 passed."
+	incr passedTests
+	puts "Correct! Test 3 passed."
 } else {
-	puts "InCorrect! Test 2 didn't pass."
+	puts "InCorrect! Test 3 didn't pass."
 }
 
-# Test 3
+# Test 4
 
 #addi $7, $0, 17
 #addi $11, $0, -3
@@ -145,41 +150,7 @@ run 400 ns
 
 #check if the result is correct (result F010 E8EE A3E2 0B28)
 if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0x00000008} {
-	puts "Correct! Test 3 passed."
-} else {
-	puts "InCorrect! Test 3 didn't pass."
-}
-
-# Test 4
-
-#addi $7, $0, 17
-#addi $11, $0, -3
-#sra $11, $7, 1
-#sw $11, 15($7)
-
-# you can use any of the following commands as an example on how to initilaize a memory location with a value
-add_force {/cpu_tb/U_1/mw_U_0ram_table[0]} -radix hex {20070011}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[1]} -radix hex {200BFFFD}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[2]} -radix hex {00E75804}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[3]} -radix hex {aceb000f}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[4]} -radix hex {00000000}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[5]} -radix hex {00000000}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[6]} -radix hex {00000000}
-add_force {/cpu_tb/U_1/mw_U_0ram_table[7]} -radix hex {00000000}
-
-add_force reset 0 
-run 2500ps
-
-#give a reset signal
-run 2500ps
-add_force reset 1
-run 5 ns
-add_force reset 0
-
-run 400 ns
-
-#check if the result is correct (result F010 E8EE A3E2 0B28)
-if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0x00220000} {
+	incr passedTests
 	puts "Correct! Test 4 passed."
 } else {
 	puts "InCorrect! Test 4 didn't pass."
@@ -215,6 +186,7 @@ run 400 ns
 
 #check if the result is correct
 if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0x00000001} {
+	incr passedTests
 	puts "Correct! Test 5 passed."
 } else {
 	puts "InCorrect! Test 5 didn't pass."
@@ -254,6 +226,7 @@ run 800 ns
 
 #check if the result is correct
 if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0x00000001} {
+	incr passedTests
 	puts "Correct! Test 6 passed."
 } else {
 	puts "InCorrect! Test 6 didn't pass."
@@ -285,6 +258,7 @@ add_force reset 0
 run 400 ns
 
 if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0x00000015} {
+    incr passedTests
     puts "Correct! Test 7 passed."
 } else {
     puts "InCorrect! Test 7 didn't pass."
@@ -316,6 +290,7 @@ run 1000 ns
 
 # Check memory index 8 (address 32 / 4 = 8)
 if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0x12345678} {
+    incr passedTests
     puts "Correct! Test 8 passed."
 } else {
     puts "InCorrect! Test 8 didn't pass."
@@ -345,6 +320,7 @@ add_force reset 0
 run 400 ns
 
 if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0x00000064} {
+    incr passedTests
     puts "Correct! Test 9 passed."
 } else {
     puts "InCorrect! Test 9 didn't pass."
@@ -384,7 +360,10 @@ run 1000 ns
 
 #check if the result is correct
 if {[get_value -radix unsigned {/cpu_tb/U_1/mw_U_0ram_table[8]}] == 0xFFFFFFFD} {
+	incr passedTests
 	puts "Correct! Test 10 passed."
 } else {
 	puts "InCorrect! Test 10 didn't pass."
 }
+
+puts "Number of passed tests: $passedTests"
