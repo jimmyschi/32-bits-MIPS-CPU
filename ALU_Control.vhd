@@ -40,15 +40,16 @@ end ALU_Control;
 
 architecture Behavioral of ALU_Control is
 begin
-    ALUOp_out <= "0101" when ALUOp_in <= "000000" and input <= "100001" else --ADDU
-                 "0000" when ALUOp_in <= "000000" and input <= "100100" else --AnD
-                 "1010" when ALUOp_in <= "001010" else --SLTI
-                 "1111" when ALUOp_in <= "000000" and input <= "000011" else --SRA
-                 "0110" when ALUOp_in <= "000000" and input <= "100010" else --SUB
-                 "0101" when ALUOp_in <= "001000" else --ADDI
-                 "0001" when ALUOp_in <= "001101" else --ORI
-                 "0101" when ALUOp_in <= "100011" else --LW
-                 "1110" when ALUOp_in <= "000000" and input <= "000000" else --SLL
-                 "0000";
-
+    ALUOp_out <= 
+        "0101" when ALUOp_in = "000000" and input = "100001" else -- ADDU
+        "0000" when ALUOp_in = "000000" and input = "100100" else -- AND
+        "0001" when ALUOp_in = "000000" and input = "100101" else -- OR  (NEW)
+        "0110" when ALUOp_in = "000000" and input = "100010" else -- SUB
+        "1110" when ALUOp_in = "000000" and input = "000000" else -- SLL
+        "1111" when ALUOp_in = "000000" and input = "000011" else -- SRA
+        "1010" when ALUOp_in = "001010" else -- SLTI
+        "0101" when ALUOp_in = "001000" else -- ADDI
+        "0001" when ALUOp_in = "001101" else -- ORI
+        "0101" when ALUOp_in = "100011" else -- LW
+        "0000";
 end Behavioral;
