@@ -26,8 +26,6 @@ The CPU is based on the standard multicycle MIPS datapath architecture:
 
 - Intermediate registers (A, B, ALUOut, MDR)
 
-- Sign-extension and shift-left-2 units
-
 - PC update logic with PCWrite / PCWriteCond
 
 - IorD memory addressing mux
