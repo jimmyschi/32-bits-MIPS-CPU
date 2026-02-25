@@ -3,7 +3,7 @@ This project implements a 32-bit multicycle MIPS processor in VHDL, designed and
 
 The design includes:
 
-Full datapath implementation
+-Full datapath implementation
 
 Finite State Machine (FSM) controller
 
